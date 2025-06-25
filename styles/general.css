@@ -1,0 +1,21 @@
+body{
+  font-family: Arial;
+  background-color: #ffe5ec;
+  margin: 0;
+  padding: 10px;
+  box-sizing: border-box;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+p {
+  margin: 0;
+}
