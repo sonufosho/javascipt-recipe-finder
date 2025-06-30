@@ -16,6 +16,7 @@ document.querySelector('.js-search').addEventListener('click', async() => {
 
   document.querySelector('.js-search-result').innerHTML = `Search results for "${searchInput}"`;
 
+  recipeHTML = '';
   data.meals.forEach((meal) => {
     recipeHTML += `
       <div class="recipe js-recipe" data-id-meal="${meal.idMeal}">
