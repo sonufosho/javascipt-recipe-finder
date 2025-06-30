@@ -51,5 +51,6 @@ async function renderRecipeDetailsHTML() {
 renderRecipeDetailsHTML();
 
 document.querySelector('.js-back-button').addEventListener('click', () => {
+  localStorage.removeItem('idMeal');
   window.location.href = 'index.html';
 });
