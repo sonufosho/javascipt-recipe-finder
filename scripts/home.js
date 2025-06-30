@@ -54,6 +54,13 @@ document.querySelector('.js-search').addEventListener('click', async() => {
   });
 });
 
+
+document.querySelector('.js-input').addEventListener('keydown', (event) => {
+  if (event.key === 'Enter') {
+    document.querySelector('.js-search').click();
+  }
+});
+
 document.querySelector('.js-clear-button').addEventListener('click', () => {
   recipeHTML = '';
   localStorage.removeItem('recipeHTML');
