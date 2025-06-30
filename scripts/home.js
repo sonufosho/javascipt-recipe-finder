@@ -10,22 +10,34 @@ document.querySelector('.js-search').addEventListener('click', async() => {
   document.querySelector('.js-search-result').classList.remove('hidden');
   document.querySelector('.js-search-result').innerHTML = `Searching for "${searchInput}"...`;
 
-  const response = await fetch(`${SEARCH_URL}${searchInput}`);
+  const response = await fetch(`${SEARCH_URL}${searchInput}`).catch((error) => {
+    document.querySelector('.js-search-result').innerHTML = `Something went wrong. Please try again later.`;
+  });
   const data = await response.json();
   console.log(data);
 
-  document.querySelector('.js-clear-button').classList.remove('hidden');
-  document.querySelector('.js-search-result').innerHTML = `Search results for "${searchInput}"`;
+  if (data.meals === null || searchInput === '') {
+    document.querySelector('.js-clear-button').classList.remove('hidden');
+    document.querySelector('.js-search-result').innerHTML = `Hmm... couldn't find anything tasty for "${searchInput}". Try another dish!`;
+    recipeHTML = '';
+    localStorage.removeItem('recipeHTML');
+  } else {
+    document.querySelector('.js-clear-button').classList.remove('hidden');
+    document.querySelector('.js-search-result').innerHTML = `Search results for "${searchInput}"`;
+  
+    recipeHTML = '';
+    localStorage.removeItem('recipeHTML');
 
-  recipeHTML = '';
-  data.meals.forEach((meal) => {
-    recipeHTML += `
-      <div class="recipe js-recipe" data-id-meal="${meal.idMeal}">
-        <img src="${meal.strMealThumb}">
-        <div>${meal.strMeal}</div>
-      </div>
-    `;
-  });
+    data.meals.forEach((meal) => {
+      recipeHTML += `
+        <div class="recipe js-recipe" data-id-meal="${meal.idMeal}">
+          <img src="${meal.strMealThumb}">
+          <div>${meal.strMeal}</div>
+        </div>
+      `;
+    });
+  }
+
 
   localStorage.setItem('searchInput', searchInput);
   localStorage.setItem('recipeHTML', recipeHTML);
