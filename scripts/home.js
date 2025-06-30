@@ -14,6 +14,7 @@ document.querySelector('.js-search').addEventListener('click', async() => {
   const data = await response.json();
   console.log(data);
 
+  document.querySelector('.js-clear-button').classList.remove('hidden');
   document.querySelector('.js-search-result').innerHTML = `Search results for "${searchInput}"`;
 
   recipeHTML = '';
@@ -40,10 +41,19 @@ document.querySelector('.js-search').addEventListener('click', async() => {
   });
 });
 
+document.querySelector('.js-clear-button').addEventListener('click', () => {
+  recipeHTML = '';
+  localStorage.removeItem('recipeHTML');
+  localStorage.removeItem('searchInput');
+  document.querySelector('.js-recipe-container').innerHTML = recipeHTML;
+  document.querySelector('.js-clear-button').classList.add('hidden');
+});
+
 window.addEventListener('DOMContentLoaded', () => {
   const storedHTML = localStorage.getItem('recipeHTML');
 
   if (storedHTML) {
+    document.querySelector('.js-clear-button').classList.remove('hidden');
     document.querySelector('.js-search-result').classList.remove('hidden');
     document.querySelector('.js-search-result').innerHTML = `Search results for "${localStorage.getItem('searchInput')}"`;
 
