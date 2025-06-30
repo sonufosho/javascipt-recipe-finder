@@ -16,9 +16,6 @@ document.querySelector('.js-search').addEventListener('click', async() => {
 
   document.querySelector('.js-search-result').innerHTML = `Search results for "${searchInput}"`;
 
-  localStorage.setItem('meals', JSON.stringify(data.meals));
-  localStorage.setItem('searchInput', searchInput);
-
   data.meals.forEach((meal) => {
     recipeHTML += `
       <div class="recipe js-recipe" data-id-meal="${meal.idMeal}">
@@ -27,6 +24,9 @@ document.querySelector('.js-search').addEventListener('click', async() => {
       </div>
     `;
   });
+
+  localStorage.setItem('searchInput', searchInput);
+  localStorage.setItem('recipeHTML', recipeHTML);
 
   document.querySelector('.js-recipe-container').innerHTML = recipeHTML;
 
@@ -37,4 +37,23 @@ document.querySelector('.js-search').addEventListener('click', async() => {
       window.location.href = 'recipe.html';
     });
   });
+});
+
+window.addEventListener('DOMContentLoaded', () => {
+  const storedHTML = localStorage.getItem('recipeHTML');
+
+  if (storedHTML) {
+    document.querySelector('.js-search-result').classList.remove('hidden');
+    document.querySelector('.js-search-result').innerHTML = `Search results for "${localStorage.getItem('searchInput')}"`;
+
+    document.querySelector('.js-recipe-container').innerHTML = storedHTML;
+
+    document.querySelectorAll('.js-recipe').forEach((recipe) => {
+      recipe.addEventListener('click', () => {
+        const idMeal = recipe.dataset.idMeal;
+        localStorage.setItem('idMeal', idMeal);
+        window.location.href = 'recipe.html';
+      });
+    });
+  }
 });
