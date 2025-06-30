@@ -12,13 +12,14 @@ document.querySelector('.js-search').addEventListener('click', async() => {
 
   const response = await fetch(`${SEARCH_URL}${searchInput}`).catch((error) => {
     document.querySelector('.js-search-result').innerHTML = `Something went wrong. Please try again later.`;
+    document.querySelector('.js-clear-button').classList.add('hidden');
   });
   const data = await response.json();
   console.log(data);
 
   if (data.meals === null || searchInput === '') {
-    document.querySelector('.js-clear-button').classList.remove('hidden');
     document.querySelector('.js-search-result').innerHTML = `Hmm... couldn't find anything tasty for "${searchInput}". Try another dish!`;
+
     recipeHTML = '';
     localStorage.removeItem('recipeHTML');
   } else {
@@ -59,6 +60,7 @@ document.querySelector('.js-clear-button').addEventListener('click', () => {
   localStorage.removeItem('searchInput');
   document.querySelector('.js-recipe-container').innerHTML = recipeHTML;
   document.querySelector('.js-clear-button').classList.add('hidden');
+  document.querySelector('.js-search-result').classList.add('hidden');
 });
 
 window.addEventListener('DOMContentLoaded', () => {
