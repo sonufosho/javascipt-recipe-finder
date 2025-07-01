@@ -69,7 +69,7 @@
   line-height: 18px;
   margin-bottom: 4px;
 
-  background-color: #99999960;
+  background-color: #99999930;
   padding: 6px;
 }
 
@@ -89,7 +89,8 @@
   font-weight: bold;
   padding: 12px 16px;
   border: none;
-  background-color: #c32f27;
+  border-radius: 6px;
+  background-color: #ff0000;
   color: white;
 }
 
